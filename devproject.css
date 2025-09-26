@@ -1,0 +1,28 @@
+
+
+
+
+
+
+// function_4 Appointment System & Booking Logic
+
+cpp
+// FILE: appointment_system.cpp
+void bookAppointment() {
+    // Display doctors
+    // Get patient input
+    // Create appointment object
+    // Add to appointments vector
+}
+
+void viewAppointments() {
+    if (appointments.empty()) {
+        cout << "No appointments booked.";
+        return;
+    }
+    // Display all appointments
+}
+
+void checkDoctorAvailability() {
+    // Show available doctors table
+}
