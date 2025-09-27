@@ -1,107 +1,188 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <iomanip>
+#include <map>
 
+using namespace std;
 
-
-
-
-
-// fuction_2  Data Structures & Doctor Management
-
-cpp
-// FILE: data_structures.cpp
+// Structure to store doctor information
 struct Doctor {
-    string name, specialization, availability;
+    string name;
+    string specialization;
+    string availability;
     double consultationFee;
 };
 
+// Structure for appointment booking
 struct Appointment {
-    string patientName, doctorName, date, timeSlot;
+    string patientName;
+    string doctorName;
+    string date;
+    string timeSlot;
     double fee;
 };
 
+// Global vectors to store data
 vector<Doctor> doctors;
 vector<Appointment> appointments;
 
+// Function prototypes
+void initializeDoctors();
+void displayMainMenu();
+void symptomChecker();
+void checkDoctorAvailability();
+void bookAppointment();
+void viewAppointments();
+int getValidatedInput(int min, int max);
+void clearScreen();
+
+int main() {
+    initializeDoctors(); // Initialize doctor data
+    
+    int choice;
+    bool running = true;
+    
+    cout << "================================================" << endl;
+    cout << "    TELEMEDICINE HEALTHCARE ASSISTANT" << endl;
+    cout << "  Bridging Healthcare Gaps Through Technology" << endl;
+    cout << "================================================" << endl;
+    
+    while (running) {
+        displayMainMenu();
+        choice = getValidatedInput(1, 5);
+        
+        switch(choice) {
+            case 1:
+                symptomChecker();
+                break;
+            case 2:
+                checkDoctorAvailability();
+                break;
+            case 3:
+                bookAppointment();
+                break;
+            case 4:
+                viewAppointments();
+                break;
+            case 5:
+                cout << "\nThank you for using Telemedicine Assistant!" << endl;
+                cout << "Stay healthy and safe!" << endl;
+                running = false;
+                break;
+        }
+        
+        if (running) {
+            cout << "\nPress Enter to continue...";
+            cin.ignore();
+            cin.get();
+            clearScreen();
+        }
+    }
+    
+    return 0;
+}
+
 void initializeDoctors() {
+    // Initialize with sample doctor data
     doctors = {
         {"Dr. Ahmad Rahman", "General Physician", "Mon-Fri: 9AM-5PM", 50.00},
-        {"Dr. Siti Khadijah", "Pediatrician", "Tue-Sat: 10AM-6PM", 75.00}
-        // Add more doctors...
+        {"Dr. Siti Khadijah", "Pediatrician", "Tue-Sat: 10AM-6PM", 75.00},
+        {"Dr. Kumar Rajesh", "Cardiologist", "Mon-Wed-Fri: 8AM-4PM", 120.00},
+        {"Dr. Mei Ling", "Dermatologist", "Thu-Sun: 11AM-7PM", 90.00},
+        {"Dr. James Wong", "Psychiatrist", "Mon-Thu: 1PM-9PM", 100.00}
     };
 }
 
-// fuction_3  Symptom Checker & Health Logic
+void displayMainMenu() {
+    cout << "\n========== MAIN MENU ==========" << endl;
+    cout << "1. Symptom Checker & Health Advice" << endl;
+    cout << "2. Check Doctor Availability" << endl;
+    cout << "3. Book Teleconsultation Appointment" << endl;
+    cout << "4. View My Appointments" << endl;
+    cout << "5. Exit System" << endl;
+    cout << "===============================" << endl;
+    cout << "Please enter your choice (1-5): ";
+}
 
-cpp
-// FILE: symptom_checker.cpp
 void symptomChecker() {
+    cout << "\n=== SYMPTOM CHECKER & HEALTH ADVICE ===" << endl;
+    cout << "Please describe your main symptoms: ";
+    
     string symptoms;
-    cout << "Describe your symptoms: ";
+    cin.ignore();
     getline(cin, symptoms);
     
-    // Symptom analysis logic
-    if (symptoms.find("fever") != string::npos) {
-        cout << "Advice: Rest and drink fluids...";
+    // Convert symptoms to lowercase for easier matching
+    string lowerSymptoms = symptoms;
+    for (char &c : lowerSymptoms) {
+        c = tolower(c);
     }
-    // Add more symptom checks...
-}
-
-// Utility functions
-int getValidatedInput(int min, int max) {
-    // Input validation logic
-}
-
-void clearScreen() {
-    // Screen clearing logic
-}
     
-// function_4 Appointment System & Booking Logic
-
-cpp
-// FILE: appointment_system.cpp
-void bookAppointment() {
-    // Display doctors
-    // Get patient input
-    // Create appointment object
-    // Add to appointments vector
-}
-
-void viewAppointments() {
-    if (appointments.empty()) {
-        cout << "No appointments booked.";
-        return;
+    cout << "\n--- Health Assessment ---" << endl;
+    
+    // Basic symptom analysis
+    if (lowerSymptoms.find("fever") != string::npos || 
+        lowerSymptoms.find("cough") != string::npos ||
+        lowerSymptoms.find("cold") != string::npos) {
+        cout << " URGENCY: Medium" << endl;
+        cout << " Advice: Common viral infection detected." << endl;
+        cout << "   - Rest well and stay hydrated" << endl;
+        cout << "   - Monitor temperature every 4 hours" << endl;
+        cout << "   - Consider consulting a General Physician" << endl;
+        cout << "   - Available doctors: Dr. Ahmad Rahman" << endl;
     }
-    // Display all appointments
+    else if (lowerSymptoms.find("chest pain") != string::npos ||
+             lowerSymptoms.find("breath") != string::npos) {
+        cout << " URGENCY: HIGH - Seek immediate care!" << endl;
+        cout << " Advice: These symptoms require urgent attention." << endl;
+        cout << "   - Contact emergency services if severe" << endl;
+        cout << "   - Available specialist: Dr. Kumar Rajesh (Cardiologist)" << endl;
+    }
+    else if (lowerSymptoms.find("skin") != string::npos ||
+             lowerSymptoms.find("rash") != string::npos) {
+        cout << " URGENCY: Low-Medium" << endl;
+        cout << " Advice: Dermatological issue detected." << endl;
+        cout << "   - Avoid scratching affected areas" << endl;
+        cout << "   - Keep skin clean and dry" << endl;
+        cout << "   - Available specialist: Dr. Mei Ling (Dermatologist)" << endl;
+    }
+    else if (lowerSymptoms.find("anxiety") != string::npos ||
+             lowerSymptoms.find("stress") != string::npos ||
+             lowerSymptoms.find("depress") != string::npos) {
+        cout << " URGENCY: Medium" << endl;
+        cout << " Advice: Mental health support available." << endl;
+        cout << "   - Practice relaxation techniques" << endl;
+        cout << "   - Consider speaking with a mental health professional" << endl;
+        cout << "   - Available specialist: Dr. James Wong (Psychiatrist)" << endl;
+    }
+    else {
+        cout << " URGENCY: Low" << endl;
+        cout << " Advice: General symptoms detected." << endl;
+        cout << "   - Rest and monitor symptoms" << endl;
+        cout << "   - Stay hydrated and maintain healthy diet" << endl;
+        cout << "   - Consult a General Physician if symptoms persist" << endl;
+    }
+    
+    cout << "\n Recommended: Teleconsultation available 24/7" << endl;
 }
 
 void checkDoctorAvailability() {
-    // Show available doctors table
+    cout << "\n=== DOCTOR AVAILABILITY ===" << endl;
+    cout << left << setw(20) << "Doctor Name" 
+         << setw(15) << "Specialization" 
+         << setw(20) << "Availability" 
+         << setw(10) << "Fee (RM)" << endl;
+    cout << string(65, '-') << endl;
+    
+    for (int i = 0; i < doctors.size(); i++) {
+        cout << left << setw(20) << doctors[i].name 
+             << setw(15) << doctors[i].specialization 
+             << setw(20) << doctors[i].availability 
+             << fixed << setprecision(2) << doctors[i].consultationFee << endl;
+    }
 }
 
-// function_5  UI/UX & Documentation Specialist
-
-cpp
-// FILE: user_interface.cpp
-void displayMainMenu() {
-    cout << "========================================" << endl;
-    cout << "    TELEMEDICINE HEALTHCARE ASSISTANT" << endl;
-    cout << "========================================" << endl;
-    cout << "1. Symptom Checker" << endl;
-    // Beautiful menu design...
-}
-
-// FILE: headers.h
-#ifndef HEADERS_H
-#define HEADERS_H
-#include <iostream>
-#include <vector>
-#include <string>
-using namespace std;
-
-// Function declarations
-void displayMainMenu();
-void symptomChecker();
-// ... all other functions
-#endif
 void bookAppointment() {
     cout << "\n=== BOOK TELECONSULTATION APPOINTMENT ===" << endl;
     
@@ -183,3 +264,4 @@ void clearScreen() {
     #else
         system("clear");
     #endif
+}
