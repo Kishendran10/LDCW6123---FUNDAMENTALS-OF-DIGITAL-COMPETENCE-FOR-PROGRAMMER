@@ -102,3 +102,84 @@ void displayMainMenu();
 void symptomChecker();
 // ... all other functions
 #endif
+void bookAppointment() {
+    cout << "\n=== BOOK TELECONSULTATION APPOINTMENT ===" << endl;
+    
+    // Display available doctors
+    checkDoctorAvailability();
+    
+    cout << "\nSelect a doctor (1-" << doctors.size() << "): ";
+    int doctorChoice = getValidatedInput(1, doctors.size());
+    
+    Appointment newAppointment;
+    Doctor selectedDoctor = doctors[doctorChoice - 1];
+    
+    cout << "Enter your full name: ";
+    cin.ignore();
+    getline(cin, newAppointment.patientName);
+    
+    cout << "Preferred consultation date (DD/MM/YYYY): ";
+    getline(cin, newAppointment.date);
+    
+    cout << "Preferred time slot (e.g., 10:00 AM): ";
+    getline(cin, newAppointment.timeSlot);
+    
+    newAppointment.doctorName = selectedDoctor.name;
+    newAppointment.fee = selectedDoctor.consultationFee;
+    
+    appointments.push_back(newAppointment);
+    
+    cout << "\n APPOINTMENT BOOKED SUCCESSFULLY!" << endl;
+    cout << "Patient: " << newAppointment.patientName << endl;
+    cout << "Doctor: " << newAppointment.doctorName << endl;
+    cout << "Date: " << newAppointment.date << endl;
+    cout << "Time: " << newAppointment.timeSlot << endl;
+    cout << "Consultation Fee: RM " << fixed << setprecision(2) << newAppointment.fee << endl;
+    cout << "\n You will receive a confirmation email with video call link." << endl;
+}
+
+void viewAppointments() {
+    if (appointments.empty()) {
+        cout << "\nNo appointments booked yet." << endl;
+        return;
+    }
+    
+    cout << "\n=== YOUR APPOINTMENTS ===" << endl;
+    cout << left << setw(20) << "Patient" 
+         << setw(20) << "Doctor" 
+         << setw(12) << "Date" 
+         << setw(10) << "Time" 
+         << setw(8) << "Fee" << endl;
+    cout << string(70, '-') << endl;
+    
+    for (const auto& appointment : appointments) {
+        cout << left << setw(20) << appointment.patientName 
+             << setw(20) << appointment.doctorName 
+             << setw(12) << appointment.date 
+             << setw(10) << appointment.timeSlot 
+             << "RM " << fixed << setprecision(2) << appointment.fee << endl;
+    }
+}
+
+int getValidatedInput(int min, int max) {
+    int input;
+    while (true) {
+        cin >> input;
+        if (cin.fail() || input < min || input > max) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Invalid input! Please enter a number between " << min << " and " << max << ": ";
+        } else {
+            cin.ignore(1000, '\n');
+            return input;
+        }
+    }
+}
+
+void clearScreen() {
+    // Simple cross-platform screen clearing
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
