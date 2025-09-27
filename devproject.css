@@ -4,6 +4,33 @@
 
 
 
+
+
+// fuction_3  Symptom Checker & Health Logic
+
+cpp
+// FILE: symptom_checker.cpp
+void symptomChecker() {
+    string symptoms;
+    cout << "Describe your symptoms: ";
+    getline(cin, symptoms);
+    
+    // Symptom analysis logic
+    if (symptoms.find("fever") != string::npos) {
+        cout << "Advice: Rest and drink fluids...";
+    }
+    // Add more symptom checks...
+}
+
+// Utility functions
+int getValidatedInput(int min, int max) {
+    // Input validation logic
+}
+
+void clearScreen() {
+    // Screen clearing logic
+}
+    
 // function_4 Appointment System & Booking Logic
 
 cpp
