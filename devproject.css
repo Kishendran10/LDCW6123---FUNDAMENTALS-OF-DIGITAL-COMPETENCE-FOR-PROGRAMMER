@@ -4,7 +4,30 @@
 
 
 
+// fuction_2  Data Structures & Doctor Management
 
+cpp
+// FILE: data_structures.cpp
+struct Doctor {
+    string name, specialization, availability;
+    double consultationFee;
+};
+
+struct Appointment {
+    string patientName, doctorName, date, timeSlot;
+    double fee;
+};
+
+vector<Doctor> doctors;
+vector<Appointment> appointments;
+
+void initializeDoctors() {
+    doctors = {
+        {"Dr. Ahmad Rahman", "General Physician", "Mon-Fri: 9AM-5PM", 50.00},
+        {"Dr. Siti Khadijah", "Pediatrician", "Tue-Sat: 10AM-6PM", 75.00}
+        // Add more doctors...
+    };
+}
 
 // fuction_3  Symptom Checker & Health Logic
 
