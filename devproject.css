@@ -53,3 +53,29 @@ void viewAppointments() {
 void checkDoctorAvailability() {
     // Show available doctors table
 }
+
+// function_5  UI/UX & Documentation Specialist
+
+cpp
+// FILE: user_interface.cpp
+void displayMainMenu() {
+    cout << "========================================" << endl;
+    cout << "    TELEMEDICINE HEALTHCARE ASSISTANT" << endl;
+    cout << "========================================" << endl;
+    cout << "1. Symptom Checker" << endl;
+    // Beautiful menu design...
+}
+
+// FILE: headers.h
+#ifndef HEADERS_H
+#define HEADERS_H
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+// Function declarations
+void displayMainMenu();
+void symptomChecker();
+// ... all other functions
+#endif
